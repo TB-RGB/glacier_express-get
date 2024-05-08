@@ -11,6 +11,32 @@ const port = 5000
   // Tell the server where the files for the page are
 app.use(express.static('server/public'))
 
+// ? <----------- GET ROUTE -------------->
+const quoteList = require('./quoteList')
+
+
+// * GET Route to return some quotes
+  // 1. A method type
+  // 2. A path
+  // 3. Callback function (arrow function)
+
+app.get('/quotes', (req, res) =>{
+  console.log('Quotes was requested')
+  
+  res.send(quoteList)
+})
+
+app.get('/authors', (req, res) => {
+let authorList = []
+
+  for (let quote of quoteList){
+    authorList.push(quote.author)
+  }
+
+  res.send({authorList})
+})
+
+
 // ! Actually start server when file is ran
 app.listen(
     port,
